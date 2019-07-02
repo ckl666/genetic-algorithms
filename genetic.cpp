@@ -4,13 +4,13 @@
 #include <time.h>
 
 
-#define LEN 10				//ÖÖÈºµÄ¸öÊı
+#define LEN 10				//ç§ç¾¤çš„ä¸ªæ•°
 #define ARRLEN 100;
 #define ROW 10
 #define COL 10
-#define MUTATION 0.15        //±äÒìµÄ¸ÅÂÊ
+#define MUTATION 0.15        //å˜å¼‚çš„æ¦‚ç‡
 
-//Ñ¡È¡Ëæ»úµÄÊı×é
+//é€‰å–éšæœºçš„æ•°ç»„
 //
 //
 
@@ -23,32 +23,32 @@ int Sum(int *arr,int len,int *yarr)
 	}
 	return sum;
 }
-//ÊÊÓ¦¶ÈËã·¨
+//é€‚åº”åº¦ç®—æ³•
 int Suff(int arr[ROW][COL],int mid,int len,int n,int *yarr,double *suf)
 {
 	double suff = 0;
-	int num = 0;							//×ÓÊı×éµÄºÍ
+	int num = 0;							//å­æ•°ç»„çš„å’Œ
 	for(int i = 0; i < n; i++)
 	{
 		num = Sum(arr[i],len,yarr);			
-		num = abs(num-mid);				//×ÓÊı×éºÍ¼õÈ¥Ô­Êı×éµÄºÍµÄÒ»°ë
+		num = abs(num-mid);				//å­æ•°ç»„å’Œå‡å»åŸæ•°ç»„çš„å’Œçš„ä¸€åŠ
 		if (num == 0)
 		{
 			return i;
 		}
-		suff += (double)1/num;			//ÀÛ¼Ó×ÜµÄÊÊÓ¦¶È
-		num = 0;						//Ñ­»·Çó½â
+		suff += (double)1/num;			//ç´¯åŠ æ€»çš„é€‚åº”åº¦
+		num = 0;						//å¾ªç¯æ±‚è§£
 	}
 	*suf = suff;
-	return -1;						//·µ»Ø×ÜµÄÊÊÓ¦¶È
+	return -1;						//è¿”å›æ€»çš„é€‚åº”åº¦
 }
 
-//Ñ¡ÔñËã×ÓÉè¼Æ Ñ¡³öÏÂÒ»´ú¸öÌå
+//é€‰æ‹©ç®—å­è®¾è®¡ é€‰å‡ºä¸‹ä¸€ä»£ä¸ªä½“
 void Subarrs(int arr[ROW][COL],int mid,double suff,int n,int len,int index[LEN],int *yarr)
 {
 	double corona[LEN] = {0};
 	int num = 0;
-	for(int i = 0; i < LEN; i++)					//¹¹ÔìÂÖÅÌ
+	for(int i = 0; i < LEN; i++)					//æ„é€ è½®ç›˜
 	{
 		num = Sum(arr[i],len,yarr);
 		num = abs(num-mid);
@@ -62,10 +62,10 @@ void Subarrs(int arr[ROW][COL],int mid,double suff,int n,int len,int index[LEN],
 		}
 		//printf("%lf \n",corona[i]);
 	}	
-	//bool index[LEN] = {false};			//´æ·ÅÒÅ´«µ½ÏÂÒ»´úµÄ¸öÌåµÄÏÂ±ê
-	for(int i = 0; i < LEN; i++)		//LEN´ú±íÒÅ´«µ½ÏÂÒ»´úµÄ¸öÊı
+	//bool index[LEN] = {false};			//å­˜æ”¾é—ä¼ åˆ°ä¸‹ä¸€ä»£çš„ä¸ªä½“çš„ä¸‹æ ‡
+	for(int i = 0; i < LEN; i++)		//LENä»£è¡¨é—ä¼ åˆ°ä¸‹ä¸€ä»£çš„ä¸ªæ•°
 	{
-		float f = rand()%10000;				//Ëæ»úÑ¡ÔñÒÅ´«µ½ÏÂÒ»´ú
+		float f = rand()%10000;				//éšæœºé€‰æ‹©é—ä¼ åˆ°ä¸‹ä¸€ä»£
 		f /= 10000;	
 		//printf("%f \n",f);
 		for(int j = 0; j < LEN; j++)
@@ -101,7 +101,7 @@ int Select(int arr[ROW][COL],int row1,int row2,int *sub)
 	return 0;
 }
 
-//½»²æËã×Ó arr[][]´æ·ÅÔ­Êı×éµÄÏÂ±ê
+//äº¤å‰ç®—å­ arr[][]å­˜æ”¾åŸæ•°ç»„çš„ä¸‹æ ‡
 void Crossover(int arr[ROW][COL])
 {
 	//srand(time(0));
@@ -112,7 +112,7 @@ void Crossover(int arr[ROW][COL])
 		int sub2 = 0; 
 		int tag2 = Select(arr,i,i+1,&sub2);
 
-		if(tag1 == 0 && tag2 == 0)			//Ëæ»úÖµ²úÉúÕı³£
+		if(tag1 == 0 && tag2 == 0)			//éšæœºå€¼äº§ç”Ÿæ­£å¸¸
 		{
 			int tmp = arr[i][sub1];
 			arr[i][sub1] = arr[i+1][sub2];
@@ -135,7 +135,7 @@ int MutaIndex(int arr[ROW][COL],int row)
 }
 
 
-//±äÒìËã×Ó
+//å˜å¼‚ç®—å­
 void Mutation(int arr[ROW][COL])
 {
 	for(int i = 0; i < LEN; i++)
@@ -152,7 +152,7 @@ void Mutation(int arr[ROW][COL])
 	}
 }
 
-//Êı×é¸³Öµ
+//æ•°ç»„èµ‹å€¼
 void ArrEva(int *des,int *src,int len)
 {
 	for(int i = 0; i < len; i++)
@@ -218,14 +218,14 @@ int main()
 	{
 		yarr[i] = i;
 	}
-	//¼ÆËãÖĞ¼äÖµ
+	//è®¡ç®—ä¸­é—´å€¼
 	int mid = 0;
 	for(int i = 0; i < 100; i++)
 	{
 		mid += yarr[i];
 	}
 	mid /= 10;
-	//³õÊ¼»¯ÖÖÈº
+	//åˆå§‹åŒ–ç§ç¾¤
 	int arr[ROW][COL] = {0};
 	
 	for(int i = 0; i < ROW; i++)
@@ -250,8 +250,8 @@ int main()
 			Print(arr[tag],COL);
 			return 0;
 		}
-		int index[LEN] = {0};						//ÒÅ´«ÏÂÒ»´úµÄ¸öÌåË÷Òı
-		//ÒÅ´«µ½ÏÂÒ»´úµÄÖµ
+		int index[LEN] = {0};						//é—ä¼ ä¸‹ä¸€ä»£çš„ä¸ªä½“ç´¢å¼•
+		//é—ä¼ åˆ°ä¸‹ä¸€ä»£çš„å€¼
 		Subarrs(arr,mid,suff,ROW,COL,index,yarr);
 		ArrTwoEva(arr,index);
 		/*
